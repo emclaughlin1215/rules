@@ -44,7 +44,7 @@ class EntityIsOfType extends RulesConditionBase {
    * @return bool
    *   TRUE if the entity is of the provided type.
    */
-  public function doEvaluate(EntityInterface $provided_entity, $specified_type) {
+  protected function doEvaluate(EntityInterface $provided_entity, $specified_type) {
     $entity_type = $provided_entity->getEntityTypeId();
 
     // Check to see whether the entity's type matches the specified value.
