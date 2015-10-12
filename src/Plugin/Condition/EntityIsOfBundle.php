@@ -50,7 +50,7 @@ class EntityIsOfBundle extends RulesConditionBase {
    * @return bool
    *   TRUE if the provided entity is of the provided type and bundle.
    */
-  public function doEvaluate(EntityInterface $provided_entity, $specified_type, $specified_bundle) {
+  protected function doEvaluate(EntityInterface $provided_entity, $specified_type, $specified_bundle) {
     $entity_type = $provided_entity->getEntityTypeId();
     $entity_bundle = $provided_entity->bundle();
 
