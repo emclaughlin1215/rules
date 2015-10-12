@@ -38,7 +38,7 @@ class EntityIsNew extends RulesConditionBase {
    * @return bool
    *   TRUE if provided entity is new.
    */
-  public function doEvaluate(EntityInterface $provided_entity) {
+  protected function doEvaluate(EntityInterface $provided_entity) {
     return $provided_entity->isNew();
   }
 
