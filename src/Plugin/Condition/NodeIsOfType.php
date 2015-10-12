@@ -42,7 +42,7 @@ class NodeIsOfType extends RulesConditionBase {
    * @return bool
    *   TRUE if the node type is in the array of types.
    */
-  public function doEvaluate(NodeInterface $node, array $types) {
+  protected function doEvaluate(NodeInterface $node, array $types) {
     return in_array($node->getType(), $types);
   }
 
