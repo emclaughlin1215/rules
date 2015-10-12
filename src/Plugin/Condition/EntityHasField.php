@@ -44,7 +44,7 @@ class EntityHasField extends RulesConditionBase {
    * @return bool
    *   TRUE if the provided entity has the provided field.
    */
-  public function doEvaluate(EntityInterface $entity, $field) {
+  protected function doEvaluate(EntityInterface $entity, $field) {
     return $entity->hasField($field);
   }
 
