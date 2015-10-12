@@ -31,7 +31,7 @@ class VariableAdd extends RulesActionBase {
   /**
    * Add a variable.
    *
-   * @param string $value
+   * @param mixed $value
    *   The variable to add.
    */
   public function doExecute($value) {
