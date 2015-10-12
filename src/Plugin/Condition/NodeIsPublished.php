@@ -37,7 +37,7 @@ class NodeIsPublished extends RulesConditionBase {
    * @return bool
    *   TRUE if the node is published.
    */
-  public function doEvaluate(NodeInterface $node) {
+  protected function doEvaluate(NodeInterface $node) {
     return $node->isPublished();
   }
 
