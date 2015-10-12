@@ -33,7 +33,7 @@ use Drupal\rules\Core\RulesActionBase;
 class DataListItemRemove extends RulesActionBase {
 
   /**
-   * Executes the Plugin.
+   * Removes an item from a list.
    *
    * @param array $list
    *   An array to remove an item from.
