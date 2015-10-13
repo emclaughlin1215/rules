@@ -45,7 +45,7 @@ class DataListCountIs extends RulesConditionBase {
    * @param array $list
    *   The list to compare the value to.
    * @param string $operator
-   *   The type of comparison to do, maybe be one of '==', '<', or '>'.
+   *   The type of comparison to do, may be one of '==', '<', or '>'.
    * @param int $value
    *   The value of that the count is to compare to.
    *
