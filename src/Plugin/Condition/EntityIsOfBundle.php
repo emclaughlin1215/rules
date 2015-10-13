@@ -40,23 +40,23 @@ class EntityIsOfBundle extends RulesConditionBase {
   /**
    * Check if a provided entity is of a specific type and bundle.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $provided_entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to check the bundle and type of.
-   * @param string $specified_type
+   * @param string $type
    *   The type to check for.
-   * @param string $specified_bundle
+   * @param string $bundle
    *   The bundle to check for.
    *
    * @return bool
    *   TRUE if the provided entity is of the provided type and bundle.
    */
-  protected function doEvaluate(EntityInterface $provided_entity, $specified_type, $specified_bundle) {
-    $entity_type = $provided_entity->getEntityTypeId();
-    $entity_bundle = $provided_entity->bundle();
+  protected function doEvaluate(EntityInterface $entity, $type, $bundle) {
+    $entity_type = $entity->getEntityTypeId();
+    $entity_bundle = $entity->bundle();
 
     // Check to see whether the entity's bundle and type match the specified
     // values.
-    return $entity_bundle == $specified_bundle && $entity_type == $specified_type;
+    return $entity_bundle == $bundle && $entity_type == $type;
   }
 
 }
