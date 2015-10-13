@@ -36,19 +36,19 @@ class EntityIsOfType extends RulesConditionBase {
   /**
    * Check if the provided entity is of a specific type.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $provided_entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to check for a type
-   * @param string $specified_type
+   * @param string $type
    *   The type to check for
    *
    * @return bool
    *   TRUE if the entity is of the provided type.
    */
-  protected function doEvaluate(EntityInterface $provided_entity, $specified_type) {
-    $entity_type = $provided_entity->getEntityTypeId();
+  protected function doEvaluate(EntityInterface $entity, $type) {
+    $entity_type = $entity->getEntityTypeId();
 
     // Check to see whether the entity's type matches the specified value.
-    return $entity_type == $specified_type;
+    return $entity_type == $type;
   }
 
 }
