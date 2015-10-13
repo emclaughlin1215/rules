@@ -32,14 +32,14 @@ class EntityIsNew extends RulesConditionBase {
   /**
    * Check if the provided entity is new.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $provided_entity
-   *   The entity to check if is new.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity to check.
    *
    * @return bool
-   *   TRUE if provided entity is new.
+   *   TRUE if the provided entity is new.
    */
-  protected function doEvaluate(EntityInterface $provided_entity) {
-    return $provided_entity->isNew();
+  protected function doEvaluate(EntityInterface $entity) {
+    return $entity->isNew();
   }
 
 }
