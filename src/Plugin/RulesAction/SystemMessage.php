@@ -46,7 +46,7 @@ class SystemMessage extends RulesActionBase {
    * @param bool $repeat
    *   (optional) TRUE if the message should be repeated.
    */
-  protected function doExecute($message, $type, $repeat) {
+  protected function doExecute($message, $type, $repeat = FALSE) {
     // @todo Should we do the sanitization somewhere else? D7 had the sanitize
     // flag in the context definition.
     $message = SafeMarkup::checkPlain($message);

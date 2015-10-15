@@ -43,7 +43,9 @@ abstract class RulesConditionBase extends ConditionPluginBase implements RulesCo
     // passing the defined context as arguments.
     $args = [];
     foreach ($this->getContextDefinitions() as $name => $definition) {
-      $args[$name] = $this->getContextValue($name);
+      if (!is_null($this->getContextValue($name))) {
+        $args[$name] = $this->getContextValue($name);
+      }
     }
     return call_user_func_array([$this, 'doEvaluate'], $args);
   }
