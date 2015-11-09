@@ -36,7 +36,7 @@ class NodeIsOfType extends RulesConditionBase {
    *
    * @param \Drupal\node\NodeInterface $node
    *   The node to check for a type.
-   * @param array $types
+   * @param string[] $types
    *   An array of type names as strings.
    *
    * @return bool
