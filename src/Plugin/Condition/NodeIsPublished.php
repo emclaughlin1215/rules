@@ -32,7 +32,7 @@ class NodeIsPublished extends RulesConditionBase {
    * Checks if a node is published.
    *
    * @param \Drupal\node\NodeInterface $node
-   *   The node to check if is published.
+   *   The node to check.
    *
    * @return bool
    *   TRUE if the node is published.
