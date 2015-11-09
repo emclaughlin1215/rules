@@ -32,7 +32,7 @@ class NodeIsPromoted extends RulesConditionBase {
    * Checks if a node is promoted.
    *
    * @param \Drupal\node\NodeInterface $node
-   *   The node to check if is promoted.
+   *   The node to check.
    *
    * @return bool
    *   TRUE if the node is promoted.
