@@ -37,9 +37,9 @@ class EntityIsOfType extends RulesConditionBase {
    * Check if the provided entity is of a specific type.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity to check for a type
+   *   The entity to check for a type.
    * @param string $type
-   *   The type to check for
+   *   The type to check for.
    *
    * @return bool
    *   TRUE if the entity is of the provided type.
