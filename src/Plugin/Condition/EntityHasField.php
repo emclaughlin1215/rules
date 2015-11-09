@@ -37,9 +37,9 @@ class EntityHasField extends RulesConditionBase {
    * Checks if a given entity has a given field.
    *
    * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
-   *   The entity to check for the provided field
+   *   The entity to check for the provided field.
    * @param string $field
-   *   The field to check for on the entity
+   *   The field to check for on the entity.
    *
    * @return bool
    *   TRUE if the provided entity has the provided field.
