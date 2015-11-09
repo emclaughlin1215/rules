@@ -31,7 +31,7 @@ class NodeIsSticky extends RulesConditionBase {
    * Check if the given node is sticky.
    *
    * @param \Drupal\node\NodeInterface $node
-   *   The node to check for stickiness.
+   *   The node to check.
    *
    * @return bool
    *   TRUE if the node is sticky.
