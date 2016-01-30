@@ -8,6 +8,7 @@
 namespace Drupal\rules\Context;
 
 use \Drupal\Core\Plugin\Context\ContextDefinition as ContextDefinitionCore;
+use Drupal\rules\Exception\RulesClassDefinitionException;
 
 /**
  * Extends the core context definition class with useful methods.
@@ -68,12 +69,15 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
    * @param array $values
    *   The array of values, as returned by toArray().
    *
+   * @throws \Drupal\rules\Exception\RulesClassDefintionException
+   *   If the required classes are not implemented.
+   *
    * @return static
    *   The created definition.
    */
   public static function createFromArray($values) {
     if (isset($values['class']) && !in_array(ContextDefinitionInterface::class, class_implements($values['class']))) {
-      throw new \Exception('ContextDefinition class must implement ' . ContextDefinitionInterface::class . '.');
+      throw new RulesClassDefinitionException('ContextDefinition class must implement ' . ContextDefinitionInterface::class . '.');
     }
     // Default to Rules context definition class.
     $values['class'] = isset($values['class']) ? $values['class'] : ContextDefinition::class;

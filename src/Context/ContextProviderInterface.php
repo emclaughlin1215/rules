@@ -37,7 +37,7 @@ interface ContextProviderInterface {
    * @param string $name
    *   The name of the provided context in the plugin definition.
    *
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @throws \Drupal\rules\Exception\RulesContextUndefinedInvalidException
    *   If the requested provided context is not set.
    *
    * @return \Drupal\Core\Plugin\Context\ContextInterface
@@ -51,7 +51,7 @@ interface ContextProviderInterface {
    * @param string $name
    *   The name of the provided context in the plugin definition.
    *
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @throws \Drupal\rules\Exception\RulesContextUndefinedInvalidException
    *   If the requested provided context is not defined.
    *
    * @return \Drupal\Component\Plugin\Context\ContextDefinitionInterface.

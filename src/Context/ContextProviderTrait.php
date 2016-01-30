@@ -7,7 +7,7 @@
 
 namespace Drupal\rules\Context;
 
-use Drupal\Component\Plugin\Exception\ContextException;
+use Drupal\rules\Exception\RulesContextUndefinedInvalidException;
 use Drupal\Core\Plugin\Context\Context;
 
 /**
@@ -54,7 +54,7 @@ trait ContextProviderTrait {
   public function getProvidedContextDefinition($name) {
     $definition = $this->getPluginDefinition();
     if (empty($definition['provides'][$name])) {
-      throw new ContextException(sprintf("The %s provided context is not valid.", $name));
+      throw new RulesContextUndefinedInvalidException(sprintf("The %s provided context is not valid.", $name));
     }
     return $definition['provides'][$name];
   }
