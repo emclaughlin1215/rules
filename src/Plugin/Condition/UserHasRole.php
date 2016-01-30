@@ -8,6 +8,7 @@
 namespace Drupal\rules\Plugin\Condition;
 
 use Drupal\rules\Core\RulesConditionBase;
+use Drupal\rules\Exception\RulesInvalidArgumentException;
 use Drupal\user\UserInterface;
 
 /**
@@ -67,7 +68,7 @@ class UserHasRole extends RulesConditionBase {
         return (bool) !array_diff($rids, $account->getRoles());
 
       default:
-        throw new \InvalidArgumentException('Either use "AND" or "OR". Leave empty for default "AND" behavior.');
+        throw new RulesInvalidArgumentException('Either use "AND" or "OR". Leave empty for default "AND" behavior.');
     }
   }
 

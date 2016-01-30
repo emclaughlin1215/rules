@@ -13,6 +13,7 @@ use Drupal\Core\TypedData\TypedDataTrait;
 use Drupal\rules\Context\ContextDefinitionInterface;
 use Drupal\rules\Context\GlobalContextRepositoryTrait;
 use Drupal\rules\Exception\RulesEvaluationException;
+use Drupal\rules\Exception\RulesInvalidArgumentException;
 use Drupal\rules\TypedData\DataFetcherTrait;
 
 /**
@@ -150,7 +151,7 @@ class ExecutionState implements ExecutionStateInterface {
         ->getDataFetcher()
         ->fetchDataBySubPaths($this->getVariable($var_name), $parts, $langcode);
     }
-    catch (\InvalidArgumentException $e) {
+    catch (RulesInvalidArgumentException $e) {
       // Pass on the original exception in the exception trace.
       throw new RulesEvaluationException($e->getMessage(), 0, $e);
     }

@@ -11,6 +11,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\rules\Context\GlobalContextRepositoryTrait;
 use Drupal\rules\Exception\RulesIntegrityException;
+use Drupal\rules\Exception\RulesInvalidArgumentException;
 use Drupal\rules\TypedData\DataFetcherTrait;
 
 /**
@@ -97,7 +98,7 @@ class ExecutionMetadataState implements ExecutionMetadataStateInterface {
         ->getDataFetcher()
         ->fetchDefinitionBySubPaths($this->getDataDefinition($var_name), $parts, $langcode);
     }
-    catch (\InvalidArgumentException $e) {
+    catch (RulesInvalidArgumentException $e) {
       // Pass on the original exception in the exception trace.
       throw new RulesIntegrityException($e->getMessage(), 0, $e);
     }

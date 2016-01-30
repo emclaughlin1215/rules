@@ -21,6 +21,8 @@ use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\PrimitiveInterface;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\rules\Exception\RulesIntegrityException;
+use Drupal\rules\Exception\RulesInvalidArgumentException;
 
 /**
  * Implementation of the data fetcher service.
@@ -79,7 +81,7 @@ class DataFetcher implements DataFetcherInterface {
         }
         else {
           $current_selector_string = implode('.', $current_selector);
-          throw new \InvalidArgumentException("The parent property is not a list or a complex structure at '$current_selector_string'.");
+          throw new RulesInvalidArgumentException("The parent property is not a list or a complex structure at '$current_selector_string'.");
         }
 
         // If an accessed list item is not existing, $typed_data will be NULL.
@@ -97,10 +99,10 @@ class DataFetcher implements DataFetcherInterface {
       $current_selector = implode('.', $current_selector);
       throw new MissingDataException("Unable to apply data selector '$selector' at '$current_selector': " . $e->getMessage());
     }
-    catch (\InvalidArgumentException $e) {
+    catch (RulesInvalidArgumentException $e) {
       $selector = implode('.', $sub_paths);
       $current_selector = implode('.', $current_selector);
-      throw new \InvalidArgumentException("Unable to apply data selector '$selector' at '$current_selector': " . $e->getMessage());
+      throw new RulesInvalidArgumentException("Unable to apply data selector '$selector' at '$current_selector': " . $e->getMessage());
     }
   }
 
@@ -144,11 +146,11 @@ class DataFetcher implements DataFetcherInterface {
         $current_selector_string = implode('.', $current_selector);
         if (count($current_selector) > 1) {
           $parent_property = $current_selector[count($current_selector) - 2];
-          throw new \InvalidArgumentException("The data selector '$current_selector_string' cannot be applied because the parent property '$parent_property' is not a list or a complex structure");
+          throw new RulesInvalidArgumentException("The data selector '$current_selector_string' cannot be applied because the parent property '$parent_property' is not a list or a complex structure");
         }
         else {
           $type = $data_definition->getDataType();
-          throw new \InvalidArgumentException("The data selector '$current_selector_string' cannot be applied because the definition of type '$type' is not a list or a complex structure");
+          throw new RulesInvalidArgumentException("The data selector '$current_selector_string' cannot be applied because the definition of type '$type' is not a list or a complex structure");
         }
       }
 
@@ -157,7 +159,7 @@ class DataFetcher implements DataFetcherInterface {
       if (!isset($data_definition)) {
         $selector_string = implode('.', $sub_paths);
         $current_selector_string = implode('.', $current_selector);
-        throw new \InvalidArgumentException("Unable to apply data selector '$selector_string' at '$current_selector_string'");
+        throw new RulesInvalidArgumentException("Unable to apply data selector '$selector_string' at '$current_selector_string'");
       }
     }
     return $data_definition;
