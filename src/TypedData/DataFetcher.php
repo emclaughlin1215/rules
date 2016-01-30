@@ -15,7 +15,6 @@ use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\DataReferenceDefinitionInterface;
 use Drupal\Core\TypedData\DataReferenceInterface;
-use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\TypedData\ListDataDefinitionInterface;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\PrimitiveInterface;
@@ -23,6 +22,7 @@ use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\rules\Exception\RulesIntegrityException;
 use Drupal\rules\Exception\RulesInvalidArgumentException;
+use Drupal\rules\Exception\RulesMissingDataException;
 
 /**
  * Implementation of the data fetcher service.
@@ -54,7 +54,7 @@ class DataFetcher implements DataFetcherInterface {
           $this->addBubbleableMetadata($typed_data, $bubbleable_metadata);
           $typed_data = $typed_data->getTarget();
           if ($typed_data === NULL) {
-            throw new MissingDataException("The specified reference is NULL.");
+            throw new RulesMissingDataException("The specified reference is NULL.");
           }
         }
 
@@ -88,16 +88,16 @@ class DataFetcher implements DataFetcherInterface {
         if (!isset($typed_data)) {
           $selector_string = implode('.', $sub_paths);
           $current_selector_string = implode('.', $current_selector);
-          throw new MissingDataException("Unable to apply data selector '$selector_string' at '$current_selector_string'");
+          throw new RulesMissingDataException("Unable to apply data selector '$selector_string' at '$current_selector_string'");
         }
       }
       $this->addBubbleableMetadata($typed_data, $bubbleable_metadata);
       return $typed_data;
     }
-    catch (MissingDataException $e) {
+    catch (RulesMissingDataException $e) {
       $selector = implode('.', $sub_paths);
       $current_selector = implode('.', $current_selector);
-      throw new MissingDataException("Unable to apply data selector '$selector' at '$current_selector': " . $e->getMessage());
+      throw new RulesMissingDataException("Unable to apply data selector '$selector' at '$current_selector': " . $e->getMessage());
     }
     catch (RulesInvalidArgumentException $e) {
       $selector = implode('.', $sub_paths);

@@ -7,13 +7,13 @@
 
 namespace Drupal\rules\Engine;
 
-use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedDataTrait;
 use Drupal\rules\Context\ContextDefinitionInterface;
 use Drupal\rules\Context\GlobalContextRepositoryTrait;
 use Drupal\rules\Exception\RulesEvaluationException;
 use Drupal\rules\Exception\RulesInvalidArgumentException;
+use Drupal\rules\Exception\RulesMissingDataException;
 use Drupal\rules\TypedData\DataFetcherTrait;
 
 /**
@@ -155,7 +155,7 @@ class ExecutionState implements ExecutionStateInterface {
       // Pass on the original exception in the exception trace.
       throw new RulesEvaluationException($e->getMessage(), 0, $e);
     }
-    catch (MissingDataException $e) {
+    catch (RulesMissingDataException $e) {
       // Pass on the original exception in the exception trace.
       throw new RulesEvaluationException($e->getMessage(), 0, $e);
     }
