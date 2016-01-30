@@ -10,7 +10,7 @@ namespace Drupal\rules\Form;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\rules\Entity\ReactionRuleConfig;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Drupal\rules\Exception\RulesNotFoundHttpException;
 
 /**
  * Removes an expression from a rule.
@@ -63,7 +63,7 @@ class DeleteExpressionForm extends ConfirmFormBase {
     $rule_expression = $this->ruleConfig->getExpression();
     $expression_inside = $rule_expression->getExpression($this->uuid);
     if (!$expression_inside) {
-      throw new NotFoundHttpException();
+      throw new RulesNotFoundHttpException();
     }
 
     return $this->t('Are you sure you want to delete %title from %rule?', [
