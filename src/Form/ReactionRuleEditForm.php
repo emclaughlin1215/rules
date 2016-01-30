@@ -65,11 +65,11 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
     $actions['submit']['#value'] = $this->t('Save');
-    $actions['cancel'] = array(
+    $actions['cancel'] = [
       '#type' => 'submit',
       '#value' => $this->t('Cancel'),
-      '#submit' => array('::cancel'),
-    );
+      '#submit' => ['::cancel'],
+    ];
 
     return $actions;
   }

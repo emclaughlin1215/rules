@@ -36,27 +36,27 @@ class RulesSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('rules.settings');
 
-    $form['log'] = array(
+    $form['log'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log debug information to the system log'),
       '#default_value' => $config->get('log'),
-    );
-    $form['log_level'] = array(
+    ];
+    $form['log_level'] = [
       '#type' => 'radios',
       '#title' => $this->t('Log level'),
-      '#options' => array(
+      '#options' => [
         LogLevel::WARNING => $this->t('Log all warnings and errors'),
         LogLevel::ERROR => $this->t('Log errors only'),
-      ),
+      ],
       '#default_value' => $config->get('log_level') ? $config->get('log_level') : LogLevel::WARNING,
       '#description' => $this->t('Evaluations errors are logged to available loggers.'),
-      '#states' => array(
+      '#states' => [
         // Hide the log_level radios when the debug log is disabled.
-        'invisible' => array(
-          'input[name="log"]' => array('checked' => FALSE),
-        ),
-      ),
-    );
+        'invisible' => [
+          'input[name="log"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
 
     return parent::buildForm($form, $form_state);
   }
