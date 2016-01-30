@@ -38,7 +38,7 @@ class RulesSettingsForm extends ConfigFormBase {
 
     $form['log'] = array(
       '#type' => 'checkbox',
-      '#title' => $this->t('Log debug information'),
+      '#title' => $this->t('Log debug information to the system log'),
       '#default_value' => $config->get('log'),
     );
     $form['log_level'] = array(
