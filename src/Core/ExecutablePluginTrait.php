@@ -7,7 +7,7 @@
 
 namespace Drupal\rules\Core;
 
-use Drupal\rules\Exception\RulesInvalidPluginDefintionException;
+use Drupal\rules\Exception\RulesInvalidPluginDefinitionException;
 
 /**
  * Offers common methods for executable plugins.
@@ -17,7 +17,7 @@ trait ExecutablePluginTrait {
   /**
    * Get the translated label from the plugin definition.
    *
-   * @throws \Drupal\rules\Exception\RulesInvalidPluginDefintionException
+   * @throws \Drupal\rules\Exception\RulesInvalidPluginDefinitionException
    *   Thrown if the label is not defined for the plugin.
    *
    * @return string
@@ -26,7 +26,7 @@ trait ExecutablePluginTrait {
   protected function getLabelValue() {
     $definition = $this->getPluginDefinition();
     if (empty($definition['label'])) {
-      throw new RulesInvalidPluginDefintionException('The label is not defined for plugin ' . $this->getPluginId() . ' (' . __CLASS__ . ').');
+      throw new RulesInvalidPluginDefinitionException('The label is not defined for plugin ' . $this->getPluginId() . ' (' . __CLASS__ . ').');
     }
     // The label can be an instance of
     // \Drupal\Core\StringTranslation\TranslationWrapper here, so make sure to
@@ -37,7 +37,7 @@ trait ExecutablePluginTrait {
   /**
    * Get the translated summary from the label annotation.
    *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\rules\Exception\RulesInvalidPluginDefinitionException
    *   Thrown if a summary was not set.
    *
    * @return string
