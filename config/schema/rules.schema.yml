@@ -193,9 +193,15 @@ rules.settings:
   type: config_object
   label: 'Rules settings'
   mapping:
-    log:
+    log_check:
       type: boolean
       label: 'Log debug information'
-    log_level:
+    log_level_system:
+      type: string
+      label: 'Log level'
+    debug_screen_log_check:
+      type: boolean
+      label: 'Log debug information'
+    log_level_screen:
       type: string
       label: 'Log level'

@@ -35,13 +35,16 @@ class RulesSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('rules.settings');
-
     $form['log'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('System log'),
+    ];
+    $form['log']['log_check'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Log debug information to the system log'),
+      '#title' => $this->t('Log debug information'),
       '#default_value' => $config->get('log'),
     ];
-    $form['log_level'] = [
+    $form['log']['log_level_system']= [
       '#type' => 'radios',
       '#title' => $this->t('Log level'),
       '#options' => [
@@ -53,7 +56,32 @@ class RulesSettingsForm extends ConfigFormBase {
       '#states' => [
         // Hide the log_level radios when the debug log is disabled.
         'invisible' => [
-          'input[name="log"]' => ['checked' => FALSE],
+          'input[name="log_check"]' => ['checked' => FALSE]
+        ],
+      ],
+    ];
+    $form['debug_screen_log'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Screen log'),
+    ];
+    $form['debug_screen_log']['debug_screen_log_check'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Log debug information'),
+      '#default_value' => $config->get('default_screen_log'),
+    ];
+    $form['debug_screen_log']['log_level_screen'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Log level'),
+      '#options' => [
+        LogLevel::WARNING => $this->t('Log all warnings and errors'),
+        LogLevel::ERROR => $this->t('Log errors only'),
+      ],
+      '#default_value' => $config->get('log_level') ? $config->get('log_level') : LogLevel::WARNING,
+      '#description' => $this->t('Evaluations errors are logged to available loggers.'),
+      '#states' => [
+        // Hide the log_level radios when the debug log is disabled.
+        'invisible' => [
+          'input[name="debug_screen_log_check"]' => ['checked' => FALSE]
         ],
       ],
     ];
@@ -66,8 +94,10 @@ class RulesSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('rules.settings')
-      ->set('log', $form_state->getValue('log'))
-      ->set('log_level', $form_state->getValue('log_level'))
+      ->set('log_check', $form_state->getValue('log_check'))
+      ->set('debug_screen_log_check', $form_state->getValue('debug_screen_log_check'))
+      ->set('log_level_system', $form_state->getValue('log_level_system'))
+      ->set('log_level_screen', $form_state->getValue('log_level_screen'))
       ->save();
 
     parent::submitForm($form, $form_state);
