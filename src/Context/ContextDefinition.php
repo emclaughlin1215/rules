@@ -69,11 +69,11 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
    * @param array $values
    *   The array of values, as returned by toArray().
    *
-   * @throws \Drupal\rules\Exception\RulesClassDefintionException
-   *   If the required classes are not implemented.
-   *
    * @return static
    *   The created definition.
+   *
+   * @throws \Drupal\rules\Exception\ClassDefintionException
+   *   If the required classes are not implemented.
    */
   public static function createFromArray($values) {
     if (isset($values['class']) && !in_array(ContextDefinitionInterface::class, class_implements($values['class']))) {
