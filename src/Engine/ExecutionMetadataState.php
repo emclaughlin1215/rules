@@ -47,7 +47,7 @@ class ExecutionMetadataState implements ExecutionMetadataStateInterface {
     // Add definitions of all global contexts.
     $contexts = $this->getGlobalContextRepository()->getAvailableContexts();
     foreach ($contexts as $name => $context) {
-      $this->addDataDefinition($name, $context
+      $this->setDataDefinition($name, $context
         ->getContextDefinition()
         ->getDataDefinition()
       );
@@ -57,7 +57,7 @@ class ExecutionMetadataState implements ExecutionMetadataStateInterface {
   /**
    * {@inheritdoc}
    */
-  public function addDataDefinition($name, DataDefinitionInterface $definition) {
+  public function setDataDefinition($name, DataDefinitionInterface $definition) {
     $this->dataDefinitions[$name] = $definition;
     return $this;
   }
@@ -77,6 +77,16 @@ class ExecutionMetadataState implements ExecutionMetadataStateInterface {
    */
   public function hasDataDefinition($name) {
     return array_key_exists($name, $this->dataDefinitions);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeDataDefinition($name) {
+    if (array_key_exists($name, $this->dataDefinitions)) {
+      unset($this->dataDefinitions[$name]);
+    }
+    return $this;
   }
 
   /**

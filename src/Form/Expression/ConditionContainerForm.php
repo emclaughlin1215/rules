@@ -49,7 +49,7 @@ class ConditionContainerForm implements ExpressionFormInterface {
       '#empty' => t('None'),
     ];
 
-    foreach ($this->conditionContainer as $uuid => $condition) {
+    foreach ($this->conditionContainer as $condition) {
       $form['conditions']['table']['#rows'][] = [
         'element' => $condition->getLabel(),
         'operations' => [
@@ -58,16 +58,16 @@ class ConditionContainerForm implements ExpressionFormInterface {
             '#links' => [
               'edit' => [
                 'title' => $this->t('Edit'),
-                'url' => Url::fromRoute('rules.reaction_rule.expression.edit', [
-                  'reaction_config' => $this->conditionContainer->getRoot()->getConfigEntityId(),
-                  'uuid' => $uuid,
+                'url' => Url::fromRoute('entity.rules_reaction_rule.edit_form.expression.edit', [
+                  'rules_reaction_rule' => $this->conditionContainer->getRoot()->getConfigEntityId(),
+                  'uuid' => $condition->getUuid(),
                 ]),
               ],
               'delete' => [
                 'title' => $this->t('Delete'),
-                'url' => Url::fromRoute('rules.reaction_rule.expression.delete', [
+                'url' => Url::fromRoute('entity.rules_reaction_rule.edit_form.expression.delete', [
                   'rules_reaction_rule' => $this->conditionContainer->getRoot()->getConfigEntityId(),
-                  'uuid' => $uuid,
+                  'uuid' => $condition->getUuid(),
                 ]),
               ],
             ],
@@ -82,8 +82,8 @@ class ConditionContainerForm implements ExpressionFormInterface {
       '#theme' => 'menu_local_action',
       '#link' => [
         'title' => $this->t('Add condition'),
-        'url' => Url::fromRoute('rules.reaction_rule.expression.add', [
-          'reaction_config' => $this->conditionContainer->getRoot()->getConfigEntityId(),
+        'url' => Url::fromRoute('entity.rules_reaction_rule.edit_form.expression.add', [
+          'rules_reaction_rule' => $this->conditionContainer->getRoot()->getConfigEntityId(),
           'expression_id' => 'rules_condition',
         ]),
       ],

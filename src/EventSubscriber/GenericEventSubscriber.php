@@ -8,7 +8,8 @@
 namespace Drupal\rules\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\rules\Engine\RulesEventManager;
+use Drupal\rules\Core\RulesConfigurableEventHandlerInterface;
+use Drupal\rules\Core\RulesEventManager;
 use Drupal\rules\Engine\ExecutionState;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,7 +30,7 @@ class GenericEventSubscriber implements EventSubscriberInterface {
   /**
    * The Rules event manager.
    *
-   * @var \Drupal\rules\Engine\RulesEventManager
+   * @var \Drupal\rules\Core\RulesEventManager
    */
   protected $eventManager;
 
@@ -38,7 +39,7 @@ class GenericEventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\rules\Engine\RulesEventManager $event_manager
+   * @param \Drupal\rules\Core\RulesEventManager $event_manager
    *   The Rules event manager.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, RulesEventManager $event_manager) {
@@ -85,13 +86,20 @@ class GenericEventSubscriber implements EventSubscriberInterface {
    *   The event name.
    */
   public function onRulesEvent(Event $event, $event_name) {
-    // Load reaction rule config entities by $event_name.
     $storage = $this->entityTypeManager->getStorage('rules_reaction_rule');
-    // @todo Only load active reaction rules here.
-    $configs = $storage->loadByProperties(['event' => $event_name]);
 
-    // Set up an execution state with the event context.
+    // Get event metadata and the to be triggered events.
     $event_definition = $this->eventManager->getDefinition($event_name);
+    $handler_class = $event_definition['class'];
+    $triggered_events = [$event_name];
+    if (is_subclass_of($handler_class, RulesConfigurableEventHandlerInterface::class)) {
+      $qualified_event_suffixes = $handler_class::determineQualifiedEvents($event, $event_name, $event_definition);
+      foreach ($qualified_event_suffixes as $qualified_event_suffix) {
+        $triggered_event[] = "$event_name--$qualified_event_suffix";
+      }
+    }
+
+    // Setup the execution state.
     $state = ExecutionState::create();
     foreach ($event_definition['context'] as $context_name => $context_definition) {
       // If this is a GenericEvent get the context for the rule from the event
@@ -104,18 +112,27 @@ class GenericEventSubscriber implements EventSubscriberInterface {
       else {
         $value = $event->$context_name;
       }
-      $state->addVariable(
+      $state->setVariable(
         $context_name,
         $context_definition,
         $value
       );
     }
 
-    // Loop over all rules and execute them.
-    foreach ($configs as $config) {
-      /** @var \Drupal\rules\Entity\ReactionRuleConfig $config */
-      $config->getExpression()
-        ->executeWithState($state);
+    // Invoke the rules.
+    // @todo: Improve this by cloning the state after each rule, such that added
+    // variables added by one rule are not interfering with the variables of
+    // another rule.
+    foreach ($triggered_events as $triggered_event) {
+      // @todo Only load active reaction rules here.
+      $configs = $storage->loadByProperties(['event' => $triggered_event]);
+
+      // Loop over all rules and execute them.
+      foreach ($configs as $config) {
+        /** @var \Drupal\rules\Entity\ReactionRuleConfig $config */
+        $config->getExpression()
+          ->executeWithState($state);
+      }
     }
     $state->autoSave();
   }

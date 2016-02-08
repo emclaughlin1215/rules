@@ -8,7 +8,7 @@
 namespace Drupal\rules\Form;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\rules\Engine\RulesEventManager;
+use Drupal\rules\Core\RulesEventManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,14 +21,14 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
   /**
    * The event plugin manager.
    *
-   * @var \Drupal\rules\Engine\RulesEventManager
+   * @var \Drupal\rules\Core\RulesEventManager
    */
   protected $eventManager;
 
   /**
    * Constructs a new object of this class.
    *
-   * @param \Drupal\rules\Engine\RulesEventManager $event_manager
+   * @param \Drupal\rules\Core\RulesEventManager $event_manager
    *   The event plugin manager.
    */
   public function __construct(RulesEventManager $event_manager) {
@@ -65,6 +65,11 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
     $actions['submit']['#value'] = $this->t('Save');
+    $actions['cancel'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Cancel'),
+      '#submit' => ['::cancel'],
+    ];
     return $actions;
   }
 
@@ -77,6 +82,15 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
     $this->deleteFromTempStore();
 
     drupal_set_message($this->t('Reaction rule %label has been updated.', ['%label' => $this->entity->label()]));
+  }
+
+  /**
+   * Form submission handler for the 'cancel' action.
+   */
+  public function cancel(array $form, FormStateInterface $form_state) {
+    $this->deleteFromTempStore();
+    drupal_set_message($this->t('Canceled.'));
+    $form_state->setRedirect('entity.rules_reaction_rule.collection');
   }
 
   /**

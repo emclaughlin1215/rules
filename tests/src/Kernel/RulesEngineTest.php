@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Tests\RulesEngineTest.
+ * Contains \Drupal\Tests\rules\Kernel\RulesEngineTest.
  */
 
 namespace Drupal\Tests\rules\Kernel;
@@ -18,6 +18,14 @@ use Drupal\rules\Engine\ExecutionState;
  * @group rules
  */
 class RulesEngineTest extends RulesDrupalTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+    $this->installEntitySchema('user');
+  }
 
   /**
    * Tests creating a rule and iterating over the rule elements.
@@ -94,8 +102,13 @@ class RulesEngineTest extends RulesDrupalTestBase {
     );
 
     $rule->addAction('rules_test_log');
-    $rule->execute();
 
+    $component = RulesComponent::create($rule);
+
+    $violations = $component->checkIntegrity();
+    $this->assertEquals(0, iterator_count($violations));
+
+    $component->execute();
     // Test that the action logged something.
     $this->assertRulesLogEntryExists('action called');
   }
@@ -156,7 +169,7 @@ class RulesEngineTest extends RulesDrupalTestBase {
    */
   public function testSwappedCoreServices() {
     $condition_manager = $this->container->get('plugin.manager.condition');
-    $this->assertTrue($condition_manager instanceof \Drupal\rules\Condition\ConditionManager);
+    $this->assertTrue($condition_manager instanceof \Drupal\rules\Core\ConditionManager);
   }
 
 }
