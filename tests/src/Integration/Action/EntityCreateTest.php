@@ -91,7 +91,7 @@ class EntityCreateTest extends RulesEntityIntegrationTestBase {
       ]);
 
     // Instantiate the action we are testing.
-    $this->action = $this->actionManager->createInstance('rules_entity_create:entity:test');
+    $this->action = $this->actionManager->createInstance('rules_entity_create:test');
   }
 
   /**
@@ -143,7 +143,7 @@ class EntityCreateTest extends RulesEntityIntegrationTestBase {
     $this->action->refineContextDefinitions();
     $this->assertEquals(
       $this->action->getProvidedContextDefinition('entity')
-        ->getDataType(), 'entity:test:bundle_test'
+        ->getDataType(), 'test:bundle_test'
     );
   }
 

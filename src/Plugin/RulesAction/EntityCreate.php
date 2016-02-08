@@ -73,7 +73,7 @@ class EntityCreate extends RulesActionBase implements ContainerFactoryPluginInte
    */
   public function refineContextDefinitions() {
     if ($type = $this->entityTypeId) {
-      $data_type = "entity:$type";
+      $data_type = "$type";
 
       if ($bundle = $this->getContextValue('bundle')) {
         $data_type .= ":$bundle";
