@@ -17,7 +17,7 @@ use Drupal\rules\Engine\ExecutionStateInterface;
 use Drupal\rules\Engine\ExpressionBase;
 use Drupal\rules\Engine\IntegrityCheckTrait;
 use Drupal\rules\Engine\IntegrityViolationList;
-use Drupal\rules\Exception\RulesContextUndefinedInvalidException;
+use Drupal\rules\Exception\ContextUndefinedInvalidException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -135,7 +135,7 @@ class RulesAction extends ExpressionBase implements ContainerFactoryPluginInterf
     // Pass up the context definitions from the action plugin.
     $definition = $this->actionManager->getDefinition($this->configuration['action_id']);
     if (empty($definition['context'][$name])) {
-      throw new RulesContextUndefinedInvalidException(sprintf("The %s context is not a valid context.", $name));
+      throw new ContextUndefinedInvalidException(sprintf("The %s context is not a valid context.", $name));
     }
     return $definition['context'][$name];
   }

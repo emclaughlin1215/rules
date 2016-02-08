@@ -10,7 +10,7 @@ namespace Drupal\rules\Context;
 use Drupal\Core\Plugin\Context\Context;
 use Drupal\Core\Plugin\ContextAwarePluginInterface as CoreContextAwarePluginInterface;
 use Drupal\rules\Engine\ExecutionStateInterface;
-use Drupal\rules\Exception\RulesEvaluationException;
+use Drupal\rules\Exception\EvaluationException;
 
 /**
  * Provides methods for handling context based on the plugin configuration.
@@ -37,7 +37,7 @@ trait ContextHandlerTrait {
    * @param \Drupal\rules\Engine\ExecutionStateInterface $state
    *   The Rules state containing available variables.
    *
-   * @throws \Drupal\rules\Exception\RulesEvaluationException
+   * @throws \Drupal\rules\Exception\EvaluationException
    *   In case a required context is missing for the plugin.
    */
   protected function mapContext(CoreContextAwarePluginInterface $plugin, ExecutionStateInterface $state) {
@@ -48,7 +48,7 @@ trait ContextHandlerTrait {
         $typed_data = $state->fetchDataByPropertyPath($this->configuration['context_mapping'][$name]);
 
         if ($typed_data->getValue() === NULL && !$definition->isAllowedNull()) {
-          throw new RulesEvaluationException('The value of data selector '
+          throw new EvaluationException('The value of data selector '
             . $this->configuration['context_mapping'][$name] . " is NULL, but the context $name in "
             . $plugin->getPluginId() . ' requires a value.');
         }
@@ -61,7 +61,7 @@ trait ContextHandlerTrait {
       ) {
 
         if ($this->configuration['context_values'][$name] === NULL && !$definition->isAllowedNull()) {
-          throw new RulesEvaluationException("The context value for $name is NULL, but the context $name in "
+          throw new EvaluationException("The context value for $name is NULL, but the context $name in "
             . $plugin->getPluginId() . ' requires a value.');
         }
 
@@ -70,7 +70,7 @@ trait ContextHandlerTrait {
         $plugin->setContext($name, $new_context);
       }
       elseif ($definition->isRequired()) {
-        throw new RulesEvaluationException("Required context $name is missing for plugin "
+        throw new EvaluationException("Required context $name is missing for plugin "
           . $plugin->getPluginId() . '.');
       }
     }

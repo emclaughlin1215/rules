@@ -191,8 +191,8 @@ class RulesTestCase extends DrupalWebTestCase {
       $action->execute();
       $this->fail("Execution hasn't created an exception.");
     }
-    catch (RulesEvaluationException $e) {
-      $this->pass("RulesEvaluationException was thrown: ". $e);
+    catch (EvaluationException $e) {
+      $this->pass("EvaluationException was thrown: ". $e);
     }
   }
 
@@ -473,7 +473,7 @@ class RulesTestCase extends DrupalWebTestCase {
       rules_action('data_set', array('data' => 'no-selector', 'value' => ''))->integrityCheck();
       $this->fail("Validation hasn't created an exception.");
     }
-    catch (RulesIntegrityException $e) {
+    catch (IntegrityException $e) {
       $this->pass("Validation error correctly detected: ". $e);
     }
 
@@ -613,7 +613,7 @@ class RulesTestCase extends DrupalWebTestCase {
       $rule->integrityCheck();
       $this->fail('Integrity check has not thrown an exception.');
     }
-    catch (RulesIntegrityException $e) {
+    catch (IntegrityException $e) {
       $this->pass('Integrity check has thrown exception: ' . $e->getMessage());
     }
 
@@ -1301,7 +1301,7 @@ class RulesTriggerTestCase extends DrupalWebTestCase {
       $rule->integrityCheck();
       $this->fail('Integrity check failed.');
     }
-    catch (RulesIntegrityException $e) {
+    catch (IntegrityException $e) {
       $this->pass('Integrity check failed: ' . $e);
     }
   }

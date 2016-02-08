@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesNotFoundHttpException.
+ * Contains \Drupal\rules\Exception\NotFoundHttpException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown when there is an error in program logic.
  */
-class RulesNotFoundHttpException extends RulesException {
+class NotFoundHttpException extends RulesException {
 
 }

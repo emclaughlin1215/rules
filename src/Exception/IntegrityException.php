@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesIntegrityException.
+ * Contains \Drupal\rules\Exception\IntegrityException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown during integrity checks at configuration time.
  */
-class RulesIntegrityException extends RulesException {
+class IntegrityException extends RulesException {
 
 }

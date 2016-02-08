@@ -10,7 +10,7 @@ namespace Drupal\rules\Engine;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\rules\Context\ContextDefinitionInterface;
 use Drupal\rules\Entity\ReactionRuleConfig;
-use Drupal\rules\Exception\RulesContextUndefinedInvalidException;
+use Drupal\rules\Exception\ContextUndefinedInvalidException;
 
 /**
  * Handles executable Rules components.
@@ -167,14 +167,14 @@ class RulesComponent {
    * @param mixed $value
    *   The context value.
    *
-   * @throws \Drupal\rules\Exception\RulesContextUndefinedInvalidException
+   * @throws \Drupal\rules\Exception\ContextUndefinedInvalidException
    *   Thrown if the passed context is not defined.
    *
    * @return $this
    */
   public function setContextValue($name, $value) {
     if (!isset($this->contextDefinitions[$name])) {
-      throw new RulesContextUndefinedInvalidException("The specified context '$name' is not defined.");
+      throw new ContextUndefinedInvalidException("The specified context '$name' is not defined.");
     }
     $this->state->addVariable($name, $this->contextDefinitions[$name], $value);
     return $this;
@@ -186,7 +186,7 @@ class RulesComponent {
    * @return mixed[]
    *   The array of provided context values, keyed by context name.
    *
-   * @throws \Drupal\rules\Exception\RulesEvaluationException
+   * @throws \Drupal\rules\Exception\EvaluationException
    *   Thrown if the Rules expression triggers errors during execution.
    */
   public function execute() {
@@ -209,9 +209,9 @@ class RulesComponent {
    * @return mixed[]
    *   The array of provided context values, keyed by context name.
    *
-   * @throws \Drupal\rules\Exception\RulesContextUndefinedInvalidException
+   * @throws \Drupal\rules\Exception\ContextUndefinedInvalidException
    *   Thrown if the context is not defined.
-   * @throws \Drupal\rules\Exception\RulesEvaluationException
+   * @throws \Drupal\rules\Exception\EvaluationException
    *   Thrown if the Rules expression triggers errors during execution.
    */
   public function executeWithArguments(array $arguments) {

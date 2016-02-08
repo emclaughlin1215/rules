@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesEvaluationException.
+ * Contains \Drupal\rules\Exception\EvaluationException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown during evaluation.
  */
-class RulesEvaluationException extends RulesException {
+class EvaluationException extends RulesException {
 
 }

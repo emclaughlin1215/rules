@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesClassDefinitionException.
+ * Contains \Drupal\rules\Exception\ClassDefinitionException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown when required classes aren't defined.
  */
-class RulesClassDefinitionException extends RulesException {
+class ClassDefinitionException extends RulesException {
 
 }

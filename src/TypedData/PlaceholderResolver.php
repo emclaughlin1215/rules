@@ -10,8 +10,8 @@ namespace Drupal\rules\TypedData;
 use Drupal\Component\Render\HtmlEscapedText;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\rules\Exception\RulesInvalidArgumentException;
-use Drupal\rules\Exception\RulesMissingDataException;
+use Drupal\rules\Exception\InvalidArgumentException;
+use Drupal\rules\Exception\MissingDataException;
 
 /**
  * Resolver for placeholder tokens based upon typed data.
@@ -63,7 +63,7 @@ class PlaceholderResolver implements PlaceholderResolverInterface {
       foreach ($placeholders as $placeholder_main_part => $placeholder) {
         try {
           if (!isset($data[$data_name])) {
-            throw new RulesMissingDataException("There is no data with the name '$data_name' available.");
+            throw new MissingDataException("There is no data with the name '$data_name' available.");
           }
           list ($property_sub_paths, $filters) = $this->parseMainPlaceholderPart($placeholder_main_part, $placeholder);
           $fetched_data = $this->dataFetcher->fetchDataBySubPaths($data[$data_name], $property_sub_paths, $bubbleable_metadata, $options['langcode']);
@@ -76,7 +76,7 @@ class PlaceholderResolver implements PlaceholderResolverInterface {
               list($filter_id, $arguments) = $data;
               $filter = $this->dataFilterManager->createInstance($filter_id);
               if (!$filter->allowsNullValues() && !isset($value)) {
-                throw new RulesMissingDataException("There is no data value for filter '$filter_id' to work on.");
+                throw new MissingDataException("There is no data value for filter '$filter_id' to work on.");
               }
               $value = $filter->filter($definition, $value, $arguments, $bubbleable_metadata);
               $definition = $filter->filtersTo($definition, $arguments);
@@ -89,14 +89,14 @@ class PlaceholderResolver implements PlaceholderResolverInterface {
           // Escape the tokens, unless they are explicitly markup.
           $replacements[$placeholder] = $value instanceof MarkupInterface ? $value : new HtmlEscapedText($value);
         }
-        catch (RulesInvalidArgumentException $e) {
+        catch (InvalidArgumentException $e) {
           // Should we log warnings if there are problems other than missing
           // data, like syntactically invalid placeholders?
           if (!empty($options['clear'])) {
             $replacements[$placeholder] = '';
           }
         }
-        catch (RulesMissingDataException $e) {
+        catch (MissingDataException $e) {
           if (!empty($options['clear'])) {
             $replacements[$placeholder] = '';
           }
@@ -123,7 +123,7 @@ class PlaceholderResolver implements PlaceholderResolverInterface {
    *     entry is another numerically indexed array containing two items: the
    *     the filter id and the array of filter arguments.
    *
-   * @throws \Drupal\rules\Exception\RulesInvalidArgumentException
+   * @throws \Drupal\rules\Exception\InvalidArgumentException
    *   Thrown if in invalid placeholders are to be parsed.
    */
   protected function parseMainPlaceholderPart($main_part, $placeholder) {

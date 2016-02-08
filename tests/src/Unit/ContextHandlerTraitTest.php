@@ -24,7 +24,7 @@ class ContextHandlerTraitTest extends RulesUnitTestBase {
    *
    * @covers ::mapContext
    *
-   * @expectedException \Drupal\rules\Exception\RulesEvaluationException
+   * @expectedException \Drupal\rules\Exception\EvaluationException
    *
    * @expectedExceptionMessage Required context test is missing for plugin testplugin.
    */

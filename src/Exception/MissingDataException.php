@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesMissingDataException.
+ * Contains \Drupal\rules\Exception\MissingDataException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown when there is missing data.
  */
-class RulesMissingDataException extends RulesException {
+class MissingDataException extends RulesException {
 
 }

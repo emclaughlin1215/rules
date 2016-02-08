@@ -10,7 +10,7 @@ namespace Drupal\rules\Engine;
 use Drupal\Core\Plugin\ContextAwarePluginInterface as CoreContextAwarePluginInterface;
 use Drupal\rules\Context\ContextDefinitionInterface;
 use Drupal\rules\Context\ContextProviderInterface;
-use Drupal\rules\Exception\RulesIntegrityException;
+use Drupal\rules\Exception\IntegrityException;
 
 /**
  * Provides shared integrity checking methods for conditions and actions.
@@ -39,7 +39,7 @@ trait IntegrityCheckTrait {
         try {
           $data_definition = $metadata_state->fetchDefinitionByPropertyPath($this->configuration['context_mapping'][$name]);
         }
-        catch (RulesIntegrityException $e) {
+        catch (IntegrityException $e) {
           $violation = new IntegrityViolation();
           $violation->setMessage($this->t('Data selector %selector for context %context_name is invalid. @message', [
             '%selector' => $this->configuration['context_mapping'][$name],

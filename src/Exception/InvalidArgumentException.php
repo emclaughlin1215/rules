@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Exception\RulesInvalidArgumentException.
+ * Contains \Drupal\rules\Exception\InvalidArgumentException.
  */
 
 namespace Drupal\rules\Exception;
@@ -10,6 +10,6 @@ namespace Drupal\rules\Exception;
 /**
  * An exception that is thrown if an argument is invalid.
  */
-class RulesInvalidArgumentException extends RulesException {
+class InvalidArgumentException extends RulesException {
 
 }
