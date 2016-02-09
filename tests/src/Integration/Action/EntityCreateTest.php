@@ -143,7 +143,7 @@ class EntityCreateTest extends RulesEntityIntegrationTestBase {
     $this->action->refineContextDefinitions();
     $this->assertEquals(
       $this->action->getProvidedContextDefinition('entity')
-        ->getDataType(), 'test:bundle_test'
+        ->getDataType(), 'entity:test:bundle_test'
     );
   }
 
