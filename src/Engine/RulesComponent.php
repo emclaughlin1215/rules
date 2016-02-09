@@ -209,7 +209,7 @@ class RulesComponent {
    * @return mixed[]
    *   The array of provided context values, keyed by context name.
    *
-   * @throws \Drupal\rules\Exception\LogicException
+   * @throws \Drupal\rules\Exception\L
    *   Thrown if the context is not defined.
    * @throws \Drupal\rules\Exception\EvaluationException
    *   Thrown if the Rules expression triggers errors during execution.
