@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\rules\Engine\RulesComponent;
 use Drupal\rules\Entity\ReactionRuleConfig;
-use Drupal\rules\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * UI form to edit an expression like a condition or action in a rule.

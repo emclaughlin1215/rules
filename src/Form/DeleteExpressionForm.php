@@ -10,7 +10,7 @@ namespace Drupal\rules\Form;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\rules\Entity\ReactionRuleConfig;
-use Drupal\rules\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Removes an expression from a rule.

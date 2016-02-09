@@ -32,7 +32,7 @@ interface DataFetcherInterface {
    * @return \Drupal\Core\TypedData\TypedDataInterface
    *   The variable wrapped as typed data.
    *
-   * @throws \Drupal\rules\Exception\MissingDataException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    *   Thrown if the data cannot be fetched due to missing data; e.g., unset
    *   properties or list items.
    * @throws \Drupal\rules\Exception\InvalidArgumentException
@@ -55,7 +55,7 @@ interface DataFetcherInterface {
    * @return \Drupal\Core\TypedData\TypedDataInterface
    *   The variable wrapped as typed data.
    *
-   * @throws \Drupal\rules\Exception\MissingDataException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    *   Thrown if the data cannot be fetched due to missing data; e.g., unset
    *   properties or list items.
    * @throws \Drupal\rules\Exception\InvalidArgumentException

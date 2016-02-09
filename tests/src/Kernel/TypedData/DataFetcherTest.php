@@ -185,7 +185,7 @@ class DataFetcherTest extends KernelTestBase {
 
   /**
    * @cover fetchDataByPropertyPath
-   * @expectedException \Drupal\rules\Exception\MissingDataException
+   * @expectedException \Drupal\Core\TypedData\Exception\MissingDataException
    * @expectedExceptionMessage Unable to apply data selector 'field_integer.0.value' at 'field_integer.0'
    */
   public function testFetchingValueAtInvalidPosition() {
@@ -223,7 +223,7 @@ class DataFetcherTest extends KernelTestBase {
 
   /**
    * @cover fetchDataByPropertyPath
-   * @expectedException \Drupal\rules\Exception\MissingDataException
+   * @expectedException \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function testFetchingNotExistingListItem() {
     $this->node->field_integer->setValue([]);
@@ -236,7 +236,7 @@ class DataFetcherTest extends KernelTestBase {
 
   /**
    * @cover fetchDataByPropertyPath
-   * @expectedException \Drupal\rules\Exception\MissingDataException
+   * @expectedException \Drupal\Core\TypedData\Exception\MissingDataException
    * @expectedExceptionMessageRegExp #Unable to apply data selector 'field_integer.0.value' at 'field_integer':.*#
    */
   public function testFetchingFromEmptyData() {

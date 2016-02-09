@@ -473,7 +473,7 @@ class RulesTestCase extends DrupalWebTestCase {
       rules_action('data_set', array('data' => 'no-selector', 'value' => ''))->integrityCheck();
       $this->fail("Validation hasn't created an exception.");
     }
-    catch (IntegrityException $e) {
+    catch (RulesIntegrityException $e) {
       $this->pass("Validation error correctly detected: ". $e);
     }
 
@@ -613,7 +613,7 @@ class RulesTestCase extends DrupalWebTestCase {
       $rule->integrityCheck();
       $this->fail('Integrity check has not thrown an exception.');
     }
-    catch (IntegrityException $e) {
+    catch (RulesIntegrityException $e) {
       $this->pass('Integrity check has thrown exception: ' . $e->getMessage());
     }
 
@@ -676,7 +676,7 @@ class RulesTestCase extends DrupalWebTestCase {
       $rule->integrityCheck();
       $this->fail('Assertion of a list item is not valid for another item.');
     }
-    catch (Exception $e) {
+    catch (RulesException $e) {
       $this->pass('Assertion of a list item is not valid for another item.');
     }
   }
@@ -1301,7 +1301,7 @@ class RulesTriggerTestCase extends DrupalWebTestCase {
       $rule->integrityCheck();
       $this->fail('Integrity check failed.');
     }
-    catch (IntegrityException $e) {
+    catch (RulesIntegrityException $e) {
       $this->pass('Integrity check failed: ' . $e);
     }
   }

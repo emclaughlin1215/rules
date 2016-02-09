@@ -10,8 +10,8 @@ namespace Drupal\rules\TypedData;
 use Drupal\Component\Render\HtmlEscapedText;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\rules\Exception\InvalidArgumentException;
-use Drupal\rules\Exception\MissingDataException;
 
 /**
  * Resolver for placeholder tokens based upon typed data.
