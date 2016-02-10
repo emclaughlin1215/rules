@@ -167,10 +167,10 @@ class RulesComponent {
    * @param mixed $value
    *   The context value.
    *
+   * @return $this
+   *
    * @throws \Drupal\rules\Exception\LogicException
    *   Thrown if the passed context is not defined.
-   *
-   * @return $this
    */
   public function setContextValue($name, $value) {
     if (!isset($this->contextDefinitions[$name])) {
@@ -209,7 +209,7 @@ class RulesComponent {
    * @return mixed[]
    *   The array of provided context values, keyed by context name.
    *
-   * @throws \Drupal\rules\Exception\L
+   * @throws \Drupal\rules\Exception\LogicException
    *   Thrown if the context is not defined.
    * @throws \Drupal\rules\Exception\EvaluationException
    *   Thrown if the Rules expression triggers errors during execution.
