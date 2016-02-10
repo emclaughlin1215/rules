@@ -72,7 +72,7 @@ class ContextDefinition extends ContextDefinitionCore implements ContextDefiniti
    * @return static
    *   The created definition.
    *
-   * @throws  \Drupal\Component\Plugin\Exception\ContextException
+   * @throws \Drupal\Component\Plugin\Exception\ContextException
    *   If the required classes are not implemented.
    */
   public static function createFromArray($values) {
