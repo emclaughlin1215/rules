@@ -60,7 +60,7 @@ class RulesLoggerChannel extends LoggerChannel {
     }
     if ($this->config->get('debug_screen')) {
       if ($this->levelTranslation[$this->config->get('log_level_screen')] >= $this->levelTranslation[$level]) {
-        parent::log($level, $message, $context);
+        drupal_set_message($message, $level);
       }
     }
   }
