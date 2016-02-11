@@ -150,17 +150,17 @@ class Rule extends ExpressionBase implements RuleInterface, ContainerFactoryPlug
   /**
    * {@inheritdoc}
    */
-  public function addExpressionObject(ExpressionInterface $expression, $return_uuid = FALSE) {
+  public function addExpressionObject(ExpressionInterface $expression) {
     if ($expression instanceof ConditionExpressionInterface) {
-      $result = $this->conditions->addExpressionObject($expression, $return_uuid);
+      $this->conditions->addExpressionObject($expression);
     }
     elseif ($expression instanceof ActionExpressionInterface) {
-      $result = $this->actions->addExpressionObject($expression, $return_uuid);
+      $this->actions->addExpressionObject($expression);
     }
     else {
       throw new InvalidExpressionException();
     }
-    return $return_uuid ? $result : $this;
+    return $this;
   }
 
   /**
@@ -221,6 +221,22 @@ class Rule extends ExpressionBase implements RuleInterface, ContainerFactoryPlug
     $violation_list = $this->conditions->checkIntegrity($metadata_state);
     $violation_list->addAll($this->actions->checkIntegrity($metadata_state));
     return $violation_list;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function prepareExecutionMetadataState(ExecutionMetadataStateInterface $metadata_state, ExpressionInterface $until = NULL) {
+    if ($until) {
+      $found = $this->conditions->prepareExecutionMetadataState($metadata_state, $until);
+      if (!$found) {
+        $found = $this->actions->prepareExecutionMetadataState($metadata_state, $until);
+      }
+      return $found;
+    }
+    $this->conditions->prepareExecutionMetadataState($metadata_state);
+    $this->actions->prepareExecutionMetadataState($metadata_state);
+    return TRUE;
   }
 
 }

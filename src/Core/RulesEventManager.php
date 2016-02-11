@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\rules\Engine\RulesEventManager.
+ * Contains \Drupal\rules\Core\RulesEventManager.
  */
 
-namespace Drupal\rules\Engine;
+namespace Drupal\rules\Core;
 
 use Drupal\Component\Plugin\CategorizingPluginManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -15,8 +15,6 @@ use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Discovery\YamlDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 use Drupal\rules\Context\ContextDefinition;
-use Drupal\rules\Core\RulesEvent;
-use Drupal\rules\Core\RulesEventInterface;
 
 /**
  * Plugin manager for Rules events that can be triggered.
@@ -35,7 +33,7 @@ class RulesEventManager extends DefaultPluginManager implements CategorizingPlug
    * @var array
    */
   protected $defaults = [
-    'class' => RulesEvent::class,
+    'class' => RulesDefaultEventHandler::class,
   ];
 
   /**
@@ -44,7 +42,7 @@ class RulesEventManager extends DefaultPluginManager implements CategorizingPlug
   public function __construct(ModuleHandlerInterface $module_handler) {
     $this->alterInfo('rules_event');
     $this->discovery = new ContainerDerivativeDiscoveryDecorator(new YamlDiscovery('rules.events', $module_handler->getModuleDirectories()));
-    $this->factory = new ContainerFactory($this, RulesEventInterface::class);
+    $this->factory = new ContainerFactory($this, RulesEventHandlerInterface::class);
     $this->moduleHandler = $module_handler;
   }
 

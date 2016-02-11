@@ -11,10 +11,10 @@ use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\rules\Context\ContextDefinition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -68,7 +68,7 @@ class EntityCreateDeriver extends DeriverBase implements ContainerDeriverInterfa
         continue;
       }
 
-      $this->derivatives["entity:$entity_type_id"] = [
+      $this->derivatives[$entity_type_id] = [
         'label' => $this->t('Create a new @entity_type', ['@entity_type' => $entity_type->getLowercaseLabel()]),
         'category' => $entity_type->getLabel(),
         'entity_type_id' => $entity_type_id,
@@ -89,13 +89,19 @@ class EntityCreateDeriver extends DeriverBase implements ContainerDeriverInterfa
           continue;
         }
 
-        $required = ($field_name == $bundle_key);
+        $is_bundle = ($field_name == $bundle_key);
         $multiple = ($definition->getCardinality() === 1) ? FALSE : TRUE;
-        $this->derivatives["entity:$entity_type_id"]['context'][$field_name] = ContextDefinition::create($definition->getType())
+        $context_definition = ContextDefinition::create($definition->getType())
           ->setLabel($definition->getLabel())
-          ->setRequired($required)
+          ->setRequired($is_bundle)
           ->setMultiple($multiple)
           ->setDescription($definition->getDescription());
+
+        if ($is_bundle) {
+          $context_definition->setAssignmentRestriction(ContextDefinition::ASSIGNMENT_RESTRICTION_INPUT);
+        }
+
+        $this->derivatives[$entity_type_id]['context'][$field_name] = $context_definition;
       }
     }
 
