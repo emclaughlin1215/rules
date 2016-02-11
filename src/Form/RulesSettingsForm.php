@@ -39,7 +39,7 @@ class RulesSettingsForm extends ConfigFormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('System log'),
     ];
-    $form['log']['log_check'] = [
+    $form['log']['log'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log debug information'),
       '#default_value' => $config->get('log'),
@@ -56,7 +56,7 @@ class RulesSettingsForm extends ConfigFormBase {
       '#states' => [
         // Hide the log_level radios when the debug log is disabled.
         'invisible' => [
-          'input[name="log_check"]' => ['checked' => FALSE]
+          'input[name="log"]' => ['checked' => FALSE]
         ],
       ],
     ];
@@ -64,7 +64,7 @@ class RulesSettingsForm extends ConfigFormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Screen log'),
     ];
-    $form['debug_screen_log']['debug_screen_log_check'] = [
+    $form['debug_screen_log']['debug_screen'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Log debug information'),
       '#default_value' => $config->get('default_screen_log'),
@@ -81,7 +81,7 @@ class RulesSettingsForm extends ConfigFormBase {
       '#states' => [
         // Hide the log_level radios when the debug log is disabled.
         'invisible' => [
-          'input[name="debug_screen_log_check"]' => ['checked' => FALSE]
+          'input[name="debug_screen"]' => ['checked' => FALSE]
         ],
       ],
     ];
@@ -94,8 +94,8 @@ class RulesSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('rules.settings')
-      ->set('log_check', $form_state->getValue('log_check'))
-      ->set('debug_screen_log_check', $form_state->getValue('debug_screen_log_check'))
+      ->set('log', $form_state->getValue('log'))
+      ->set('debug_screen', $form_state->getValue('debug_screen'))
       ->set('log_level_system', $form_state->getValue('log_level_system'))
       ->set('log_level_screen', $form_state->getValue('log_level_screen'))
       ->save();

@@ -27,9 +27,9 @@ class RulesLoggerChannelTest extends UnitTestCase {
    *   Expected PSR3 log level.
    * @param int $rfc_message_level
    *   Expected RFC 5424 log level.
-   * @param int $log_check
+   * @param int $log
    *   Is system logging enabled.
-   * @param int $debug_screen_check
+   * @param int $debug_screen
    *   Is screen logging enabled.
    * @param string $psr3_log_error_level
    *   Allowed PSR3 log level.
@@ -42,11 +42,11 @@ class RulesLoggerChannelTest extends UnitTestCase {
    *
    * @covers ::log
    */
-  public function testLog($psr3_message_level, $rfc_message_level, $log_check, $debug_screen_check, $psr3_log_error_level, $expect_log, $message) {
+  public function testLog($psr3_message_level, $rfc_message_level, $log, $debug_screen, $psr3_log_error_level, $expect_log, $message) {
     $config = $this->getConfigFactoryStub([
       'rules.settings' => [
-        'log_check' => $log_check,
-        'debug_screen_log_check' => $debug_screen_log_check,
+        'log' => $log,
+        'debug_screen' => $debug_screen,
         'log_level_system' => $psr3_log_error_level,
         'log_level_screen' => $psr3_log_error_level,
       ],

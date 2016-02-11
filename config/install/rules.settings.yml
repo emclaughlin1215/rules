@@ -1,4 +1,4 @@
-log_check: false
-debug_screen_log_check: false
+log: false
+debug_screen: false
 log_level_system: warning
 log_level_screen: warning
