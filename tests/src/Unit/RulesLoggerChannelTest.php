@@ -120,7 +120,7 @@ namespace Drupal\Tests\rules\Unit {
           'message' => 'pear',
         ],
         [
-          'psr3_message_level' =>  LogLevel::CRITICAL,
+          'psr3_message_level' => LogLevel::CRITICAL,
           'rfc_message_level' => RfcLogLevel::CRITICAL,
           'system_log_enabled' => 1,
           'screen_log_enabled' => 0,
@@ -150,7 +150,7 @@ namespace Drupal\Tests\rules\Unit {
           'message' => 'orange',
         ],
         [
-          'psr3_message_level' =>  LogLevel::CRITICAL,
+          'psr3_message_level' => LogLevel::CRITICAL,
           'rfc_message_level' => RfcLogLevel::CRITICAL,
           'system_log_enabled' => 1,
           'screen_log_enabled' => 1,
