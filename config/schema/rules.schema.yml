@@ -231,7 +231,7 @@ rules.settings:
       label: 'Log level'
     debug_screen:
       type: boolean
-      label: 'Log debug information'
+      label: 'Show debug information on screen (in the HTML response)'
     log_level_screen:
       type: string
       label: 'Log level'

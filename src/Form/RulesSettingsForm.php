@@ -66,7 +66,7 @@ class RulesSettingsForm extends ConfigFormBase {
     ];
     $form['debug_screen_log']['debug_screen'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Log debug information'),
+      '#title' => $this->t('Show debug information on screen (in the HTML response)'),
       '#default_value' => $config->get('debug_screen'),
     ];
     $form['debug_screen_log']['log_level_screen'] = [
@@ -77,7 +77,7 @@ class RulesSettingsForm extends ConfigFormBase {
         LogLevel::ERROR => $this->t('Log errors only'),
       ],
       '#default_value' => $config->get('log_level_screen') ? $config->get('log_level_screen') : LogLevel::WARNING,
-      '#description' => $this->t('Evaluations errors are logged to available loggers.'),
+      '#description' => $this->t('Level of log messages shown on screen.'),
       '#states' => [
         // Hide the log_level radios when the debug log is disabled.
         'invisible' => [
