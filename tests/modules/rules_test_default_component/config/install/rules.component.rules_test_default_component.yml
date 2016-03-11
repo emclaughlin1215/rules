@@ -3,18 +3,21 @@ status: true
 dependencies: {}
 id: rules_test_default_component
 label: Rules test default component
-module: rules
 description: 'Tests adding Rules component by default.'
-tag: 'test'
-core: 8.x
+tags:
+  - 'test'
+config_version: '3.0'
 component:
   context_definitions:
     user:
       type: 'entity:user'
       label: User
       description: 'The user whose mail address to print.'
-  provided_context:
-    - concatenated
+  provided_context_definitions:
+    concatenated:
+      type: 'string'
+      label: Concatenated text
+      description: 'The concatenated text.'
   expression:
     id: rules_rule
     conditions:

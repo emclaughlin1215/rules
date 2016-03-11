@@ -9,7 +9,8 @@ namespace Drupal\rules\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\rules\Core\RulesEventManager;
-use Drupal\rules\Core\RulesUiConfigHandler;
+use Drupal\rules\Engine\ExpressionManagerInterface;
+use Drupal\rules\Ui\RulesUiConfigHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -27,17 +28,20 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
   /**
    * The RulesUI handler of the currently active UI.
    *
-   * @var \Drupal\rules\Core\RulesUiConfigHandler
+   * @var \Drupal\rules\Ui\RulesUiConfigHandler
    */
   protected $rulesUiHandler;
 
   /**
    * Constructs a new object of this class.
    *
+   * @param \Drupal\rules\Engine\ExpressionManagerInterface $expression_manager
+   *   The expression manager.
    * @param \Drupal\rules\Core\RulesEventManager $event_manager
    *   The event plugin manager.
    */
-  public function __construct(RulesEventManager $event_manager) {
+  public function __construct(ExpressionManagerInterface $expression_manager, RulesEventManager $event_manager) {
+    parent::__construct($expression_manager);
     $this->eventManager = $event_manager;
   }
 
@@ -45,7 +49,7 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('plugin.manager.rules_event'));
+    return new static($container->get('plugin.manager.rules_expression'), $container->get('plugin.manager.rules_event'));
   }
 
   /**
@@ -71,12 +75,17 @@ class ReactionRuleEditForm extends RulesComponentFormBase {
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
-    $event_name = $this->entity->getEvent();
-    $event_definition = $this->eventManager->getDefinition($event_name);
-    $form['event']['#markup'] = $this->t('Event: @label (@name)', [
-      '@label' => $event_definition['label'],
-      '@name' => $event_name,
-    ]);
+    foreach ($this->entity->getEventNames() as $key => $event_name) {
+      $event_definition = $this->eventManager->getDefinition($event_name);
+      $form['event'][$key] = [
+        '#type' => 'item',
+        '#title' => $this->t('Events:'),
+        '#markup' => $this->t('@label (@name)', [
+          '@label' => $event_definition['label'],
+          '@name' => $event_name,
+        ]),
+      ];
+    }
     $form = $this->rulesUiHandler->getForm()->buildForm($form, $form_state);
     return parent::form($form, $form_state);
   }
